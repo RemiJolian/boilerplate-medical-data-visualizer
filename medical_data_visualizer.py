@@ -4,15 +4,28 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Import data
-df = pd.read_csv('medical_data_visualizer.py')
+file_path = (
+    "D:\\1-Programming\\1-Training_Files & Codes\\Python\\1-Ramin's Codes\\"
+    "Data_Analysis\\5 Projects\\boilerplate-medical-data-visualizer\\medical_examination.csv")
+
+df = pd.read_csv(file_path)
+
+#way 2 to read absolute path:
+# import os
+# script_dir = os.path.dirname(__file__)
+# csv_path = os.path.join(script_dir, 'medical_examination.csv')
+# df = pd.read_csv(csv_path)
+
 
 # Add 'overweight' column
-bmd = df['weight'] / ((df['height']/100) ** 2)
-df['overweight'] = np.where((bmd > 25), 1, 0)
+df['overweight'] = (df['weight'] / ((df['height']/100) ** 2) > 25).astype(int)
+# OR:
+# bmd = df['weight'] / ((df['height']/100) ** 2)
+# df['overweight'] = np.where((bmd > 25), 1, 0)
 
 # Normalize data by making 0 always good and 1 always bad. If the value of 'cholesterol' or
 # 'gluc' is 1, make the value 0. If the value is more than 1, make the value 1.
-df['cholestrol'] = np.where((df['cholestrol'] == 1), 0, 1)
+df['cholesterol'] = np.where((df['cholesterol'] == 1), 0, 1)
 df['gluc'] = np.where((df['gluc'] == 1), 0, 1)
 
 
